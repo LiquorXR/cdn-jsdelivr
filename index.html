@@ -53,9 +53,9 @@
     </div>
 
     <script>
-        // 函数：将 GitHub URL 转换为 jsDelivr CDN 链接
+        // 函数：将 GitHub 原始 URL 转换为 jsDelivr CDN 链接
         function convertGitHubToJsDelivr(url) {
-            const regex = /https:\/\/github\.com\/([^\/]+)\/([^\/]+)\/blob\/([^\/]+)\/(.+)/;
+            const regex = /https:\/\/raw\.githubusercontent\.com\/([^\/]+)\/([^\/]+)\/refs\/heads\/([^\/]+)\/(.+)/;
             const match = url.match(regex);
             if (match) {
                 const [, user, repo, branch, filePath] = match;
