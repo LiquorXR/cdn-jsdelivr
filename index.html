@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>jsDelivr加速Github地址转换</title>
+    <title>jsDelivr加速Github Raw</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -42,19 +42,19 @@
 </head>
 <body>
 
-    <h1>jsDelivr加速Github地址转换</h1>
+    <h1>jsDelivr加速Github Raw</h1>
 
-    <textarea id="input" placeholder="粘贴 GitHub URL，支持多行"></textarea><br>
+    <textarea id="input" placeholder="粘贴 GitHub-Raw URL，支持多行"></textarea><br>
     <button id="convert">转换</button>
 
     <div class="output">
-        <textarea id="output" readonly></textarea>
+        <textarea id="output" readonly placeholder="jsDelivr-CDN 加速地址"></textarea>
     </div>
 
     <script>
-        // 函数：将 jsDelivr加速Github地址转换
+        // 函数：将 jsDelivr加速Github Raw
         function convertGitHubToJsDelivr(url) {
-            // 正则表达式：匹配 GitHub URL
+            // 正则表达式：匹配 GitHub-Raw URL
             const regex = /https:\/\/raw\.githubusercontent\.com\/([^\/]+)\/([^\/]+)\/([^\/]+)\/(.+)/;
             const match = url.match(regex);
 
@@ -64,7 +64,7 @@
                 return `https://cdn.jsdelivr.net/gh/${user}/${repo}@${branch}/${filePath}`;
             }
 
-            return `无效的 GitHub URL: ${url}`;
+            return `无效的 GitHub-Raw URL: ${url}`;
         }
 
         // 点击按钮进行转换
