@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub URL 转 jsDelivr</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>GitHub URL 转换为 jsDelivr 链接</h1>
+    <textarea id="input" placeholder="粘贴 GitHub URL，支持多行"></textarea>
+    <button id="convert">转换</button>
+    <div class="output">
+        <h3>转换结果：</h3>
+        <textarea id="output" readonly></textarea>
+    </div>
+    <script>
+        function convertGitHubToJsDelivr(url) {
+            const regex = /https:\/\/github\.com\/([^\/]+)\/([^\/]+)\/blob\/([^\/]+)\/(.+)/;
+            const match = url.match(regex);
+            if (match) {
+                const [, user, repo, branch, filePath] = match;
+                return `https://cdn.jsdelivr.net/gh/${user}/${repo}@${branch}/${filePath}`;
+            }
+            return null;
+        }
+
+        document.getElementById("convert").addEventListener("click", () => {
+            const input = document.getElementById("input").value.trim();
+            const urls = input.split("\n");
+            const results = urls.map(url => convertGitHubToJsDelivr(url) || `Invalid URL: ${url}`);
+            document.getElementById("output").value = results.join("\n");
+        });
+    </script>
+</body>
+</html>
