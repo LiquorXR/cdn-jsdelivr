@@ -7,19 +7,34 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
             background-color: #f4f7fb;
             text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            background-image: linear-gradient(to right, #e57373, #f44336, #d32f2f, #388e3c, #00796b, #512da8);
+            -webkit-background-clip: text;
+            color: transparent;
         }
         textarea {
-            width: 90%;
-            height: 150px;
+            width: 100%;
+            max-width: 800px; /* 限制最大宽度 */
             margin-bottom: 10px;
             padding: 10px;
-            font-size: 16px;
+            font-size: 14px; /* 缩小字体大小 */
             border-radius: 5px;
             border: 1px solid #ccc;
+            box-sizing: border-box;
+            resize: vertical; /* 允许垂直调整高度 */
         }
+        /* 统一设置输入框和输出框的最小高度 */
+        #input, #output {
+            min-height: 150px;
+        }
+
         button {
             padding: 10px 20px;
             background-color: #007bff;
@@ -28,15 +43,41 @@
             cursor: pointer;
             font-size: 16px;
             border-radius: 5px;
+            margin-top: 10px;
         }
         button:hover {
             background-color: #0056b3;
         }
+
+        /* Green color for Copy button */
+        button#copy {
+            background-color: #28a745;  /* Green color */
+        }
+
+        button#copy:hover {
+            background-color: #218838;  /* Darker green on hover */
+        }
+
         .output {
             margin-top: 20px;
         }
-        .output textarea {
-            height: 200px;
+        /* 响应式设计：适配手机端 */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.2em;
+            }
+            textarea {
+                width: 100%;
+                height: 100px;
+                min-height: 100px; /* 设置最小高度 */
+            }
+            button {
+                width: 100%;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -48,7 +89,9 @@
     <button id="convert">转换</button>
 
     <div class="output">
-        <textarea id="output" readonly placeholder="jsDelivr-CDN URL"></textarea>
+        <textarea id="output" readonly placeholder="jsDelivr-CDN URL"></textarea><br>
+        <!-- Copy button with green color -->
+        <button id="copy">复制</button>
     </div>
 
     <script>
@@ -73,6 +116,14 @@
             const urls = input.split("\n");  // 分割多行 URL
             const results = urls.map(url => convertGitHubToJsDelivr(url)); // 批量转换
             document.getElementById("output").value = results.join("\n"); // 显示转换结果
+        });
+
+        // 点击复制按钮进行复制
+        document.getElementById("copy").addEventListener("click", function() {
+            const outputText = document.getElementById("output");
+            outputText.select();
+            document.execCommand("copy"); // 使用命令复制文本
+            alert("已复制到剪贴板！"); // 提示用户已复制
         });
     </script>
 
