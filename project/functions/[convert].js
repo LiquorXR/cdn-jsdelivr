@@ -1,39 +1,18 @@
-export default {
-  async fetch(request) {
-    const url = new URL(request.url);
-
-    if (url.pathname === "/convert" && request.method === "POST") {
-      const requestData = await request.json();
-      const urls = requestData.urls;
-
-      if (!Array.isArray(urls)) {
-        return new Response(JSON.stringify({ error: "Invalid input" }), { status: 400 });
-      }
-
-      const convertedUrls = urls.map((githubUrl) => convertToJsDelivr(githubUrl));
-      return new Response(JSON.stringify({ convertedUrls }), { status: 200, headers: { "Content-Type": "application/json" } });
+export async function onRequest(context) {
+    const { request } = context;
+    if (request.method === 'POST') {
+        const body = await request.json();
+        const urls = body.urls || [];
+        const results = urls.map(url => {
+            const regex = /https:\/\/github\.com\/([^\/]+)\/([^\/]+)\/blob\/([^\/]+)\/(.+)/;
+            const match = url.match(regex);
+            if (match) {
+                const [, user, repo, branch, filePath] = match;
+                return `https://cdn.jsdelivr.net/gh/${user}/${repo}@${branch}/${filePath}`;
+            }
+            return `Invalid URL: ${url}`;
+        });
+        return new Response(JSON.stringify({ results }), { headers: { 'Content-Type': 'application/json' } });
     }
-
-    return new Response("Not Found", { status: 404 });
-  },
-};
-
-function convertToJsDelivr(githubUrl) {
-  try {
-    const url = new URL(githubUrl);
-    const pathParts = url.pathname.split("/").filter((part) => part);
-
-    if (url.hostname !== "github.com" || pathParts.length < 3) {
-      return { original: githubUrl, error: "Invalid GitHub URL" };
-    }
-
-    const [owner, repo, ...rest] = pathParts;
-    const branch = rest[0] === "blob" || rest[0] === "tree" ? rest[1] : "main";
-    const filePath = rest.slice(2).join("/");
-
-    const cdnUrl = `https://cdn.jsdelivr.net/gh/${owner}/${repo}@${branch}/${filePath}`;
-    return { original: githubUrl, converted: cdnUrl };
-  } catch (error) {
-    return { original: githubUrl, error: "Error parsing URL" };
-  }
+    return new Response("Only POST method is supported", { status: 405 });
 }
