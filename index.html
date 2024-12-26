@@ -9,26 +9,25 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #e0f7fa; /* 浅蓝色背景 */
+            background-color: #e0f7fa;
             background-image: 
                 linear-gradient(90deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px),
-                linear-gradient(0deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px); /* 网格效果 */
-            background-size: 20px 20px; /* 网格的大小 */
-            background-position: 0 0, 0 0; /* 网格位置 */
+                linear-gradient(0deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 0;
             text-align: center;
         }
 
         h1 {
-            font-size: 3em;  /* Increased font size */
+            font-size: 3em;
             margin-bottom: 20px;
-            background-image: linear-gradient(45deg, red, yellow, green, cyan, blue, magenta, red); /* 全色彩渐变 */
-            background-size: 400% 400%;  /* 使渐变区域更大 */
-            animation: gradient 10s ease infinite;  /* 动画：10秒循环 */
+            background-image: linear-gradient(45deg, red, yellow, green, cyan, blue, magenta, red);
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
             -webkit-background-clip: text;
             color: transparent;
         }
 
-        /* 渐变动画 */
         @keyframes gradient {
             0% {
                 background-position: 0% 50%;
@@ -43,17 +42,16 @@
 
         textarea {
             width: 100%;
-            max-width: 800px; /* 限制最大宽度 */
+            max-width: 800px;
             margin-bottom: 10px;
             padding: 10px;
-            font-size: 14px; /* 缩小字体大小 */
+            font-size: 14px;
             border-radius: 5px;
             border: 1px solid #ccc;
             box-sizing: border-box;
-            resize: vertical; /* 允许垂直调整高度 */
+            resize: vertical;
         }
 
-        /* 统一设置输入框和输出框的最小高度 */
         #input, #output {
             min-height: 150px;
         }
@@ -67,44 +65,44 @@
             font-size: 16px;
             border-radius: 5px;
             margin-top: 10px;
-            width: auto; /* Ensure width is automatic */
-            max-width: 200px; /* Set max width for buttons */
+            width: auto;
+            max-width: 200px;
         }
 
         button:hover {
             background-color: #0056b3;
         }
 
-        /* Green color for Copy button */
         button#copy {
-            background-color: #28a745;  /* Green color */
+            background-color: #28a745;
         }
 
         button#copy:hover {
-            background-color: #218838;  /* Darker green on hover */
+            background-color: #218838;
         }
 
         .output {
             margin-top: 20px;
         }
 
-        /* 响应式设计：适配手机端 */
         @media (max-width: 800px) {
             body {
-                padding: 10px;
+                padding: 15px;
             }
             h1 {
-                font-size: 2em; /* Slightly smaller font size for mobile */
+                font-size: 2em;
             }
             textarea {
-                width: 100%;
-                height: 100px;
+                font-size: 12px; /* 缩小字体大小 */
+                width: 100%; /* 保持全宽 */
+                height: 100px; /* 固定高度 */
                 min-height: 100px; /* 设置最小高度 */
+                max-height: 100px; /* 限制最大高度 */
             }
             button {
-                font-size: 16px; /* 保持字体大小一致 */
-                width: 30%; /* 手机端按钮宽度 */
-                max-width: none; /* 取消最大宽度限制 */
+                font-size: 16px;
+                width: 30%;
+                max-width: none;
             }
         }
     </style>
@@ -118,40 +116,34 @@
 
     <div class="output">
         <textarea id="output" readonly placeholder="jsDelivr-CDN URL"></textarea><br>
-        <!-- Copy button with green color -->
         <button id="copy">复制</button>
     </div>
 
     <script>
-        // 函数：将 jsDelivr CDN加速URL
         function convertGitHubToJsDelivr(url) {
-            // 正则表达式：匹配 GitHub-Raw URL
             const regex = /https:\/\/raw\.githubusercontent\.com\/([^\/]+)\/([^\/]+)\/([^\/]+)\/(.+)/;
             const match = url.match(regex);
 
             if (match) {
                 const [, user, repo, branch, filePath] = match;
-                // 生成 jsDelivr 链接
                 return `https://cdn.jsdelivr.net/gh/${user}/${repo}@${branch}/${filePath}`;
             }
 
             return `无效的 GitHub-Raw URL: ${url}`;
         }
 
-        // 点击按钮进行转换
         document.getElementById("convert").addEventListener("click", function() {
             const input = document.getElementById("input").value.trim();
-            const urls = input.split("\n");  // 分割多行 URL
-            const results = urls.map(url => convertGitHubToJsDelivr(url)); // 批量转换
-            document.getElementById("output").value = results.join("\n"); // 显示转换结果
+            const urls = input.split("\n");
+            const results = urls.map(url => convertGitHubToJsDelivr(url));
+            document.getElementById("output").value = results.join("\n");
         });
 
-        // 点击复制按钮进行复制
         document.getElementById("copy").addEventListener("click", function() {
             const outputText = document.getElementById("output");
             outputText.select();
-            document.execCommand("copy"); // 使用命令复制文本
-            alert("已复制到剪贴板！"); // 提示用户已复制
+            document.execCommand("copy");
+            alert("已复制到剪贴板！");
         });
     </script>
 
