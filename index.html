@@ -54,7 +54,7 @@
             border: 1px solid #ccc; /* 边框颜色 */
             box-sizing: border-box; /* 包含内边距和边框的宽度计算 */
             resize: none; /* 允许垂直调整大小 */
-			overflow-y: auto; /* 自动显示垂直滚动条 */
+            overflow-y: auto; /* 自动显示垂直滚动条 */
         }
 
         /* 输入框和输出框的最小高度 */
@@ -159,9 +159,27 @@
         // 为“转换”按钮绑定点击事件
         document.getElementById("convert").addEventListener("click", function() {
             const input = document.getElementById("input").value.trim(); // 获取并去除输入框内容的首尾空格
-            const urls = input.split("\n"); // 按行分割输入的多个链接
-            const results = urls.map(url => convertGitHubToJsDelivr(url)); // 转换每个链接
-            document.getElementById("output").value = results.join("\n"); // 将结果显示在输出框
+
+            if (!input) {
+                // 如果输入为空，直接返回，不进行任何操作
+                return;
+            }
+
+            // 按行分割输入的多个链接，保留空行
+            const urls = input.split("\n");
+
+            // 转换每一行
+            const results = urls.map(url => {
+                if (url.trim()) {
+                    // 只有在非空行时才进行转换
+                    return convertGitHubToJsDelivr(url);
+                }
+                // 空行保留为空
+                return "";
+            });
+
+            // 将转换后的内容显示在输出框
+            document.getElementById("output").value = results.join("\n");
         });
 
         // 为“复制”按钮绑定点击事件
