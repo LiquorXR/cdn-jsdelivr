@@ -7,65 +7,57 @@
     <style>
         /* 页面整体样式 */
         body {
-            font-family: Arial, sans-serif; /* 字体样式 */
+            font-family: Arial, sans-serif; /* 设置字体 */
             margin: 0;
             padding: 20px;
             background-color: #e0f7fa; /* 背景颜色 */
             background-image: 
                 linear-gradient(90deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px),
-                linear-gradient(0deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+                linear-gradient(0deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px); /* 网格背景 */
             background-size: 20px 20px; /* 网格大小 */
-            background-position: 0 0, 0 0;
             text-align: center; /* 文本居中 */
         }
 
         /* 标题样式 */
         h1 {
-            font-size: 3em; /* 字体大小 */
-            margin-bottom: 20px; /* 下方外边距 */
-            background-image: linear-gradient(45deg, red, yellow, green, cyan, blue, magenta, red);
-            background-size: 400% 400%; /* 渐变背景的动态效果 */
-            animation: gradient 10s ease infinite; /* 动画设置 */
-            -webkit-background-clip: text; /* 裁剪背景到文本 */
-            color: transparent; /* 设置文本透明以显示背景 */
+            font-size: 3em; /* 设置标题字体大小 */
+            margin-bottom: 20px; /* 标题底部外边距 */
+            background-image: linear-gradient(45deg, red, yellow, green, cyan, blue, magenta, red); /* 渐变背景 */
+            background-size: 400% 400%; /* 渐变动画背景的大小 */
+            animation: gradient 10s ease infinite; /* 动画效果 */
+            -webkit-background-clip: text; /* 背景裁剪到文本 */
+            color: transparent; /* 设置文本颜色透明 */
         }
 
-        /* 背景动画效果 */
+        /* 渐变动画效果 */
         @keyframes gradient {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* 文本框通用样式 */
         textarea {
-            width: 100%; /* 宽度100% */
+            width: 100%; /* 使文本框宽度为100% */
             max-width: 800px; /* 最大宽度800px */
-            margin-bottom: 10px; /* 下方外边距 */
+            margin-bottom: 10px; /* 底部外边距 */
             padding: 10px; /* 内边距 */
             font-size: 14px; /* 字体大小 */
-            border-radius: 10px; /* 圆角边框 */
+            border-radius: 10px; /* 圆角 */
             border: 1px solid #ccc; /* 边框颜色 */
             box-sizing: border-box; /* 包含内边距和边框的宽度计算 */
-            resize: none; /* 允许垂直调整大小 */
-            overflow-y: auto; /* 自动显示垂直滚动条 */
+            resize: none; /* 禁止调整大小 */
+            overflow-y: auto; /* 允许垂直滚动 */
         }
 
         /* 输入框和输出框的最小高度 */
         #input, #output {
-            min-height: 180px;
+            min-height: 180px; /* 设置最小高度 */
         }
 
-        /* 按钮样式 */
+        /* 按钮的通用样式 */
         button {
             padding: 10px 20px; /* 内边距 */
-            background-color: #007bff; /* 背景颜色 */
             color: white; /* 字体颜色 */
             border: none; /* 无边框 */
             cursor: pointer; /* 鼠标指针样式 */
@@ -73,22 +65,37 @@
             border-radius: 10px; /* 圆角 */
             margin-top: 10px; /* 顶部外边距 */
             width: auto; /* 自动宽度 */
-            max-width: 200px; /* 最大宽度 */
+            max-width: 200px; /* 最大宽度200px */
         }
 
-        /* 按钮悬停样式 */
-        button:hover {
-            background-color: #0056b3; /* 改变背景颜色 */
+        /* 转换按钮的特定样式 */
+        button#convert {
+            background-color: #007bff;  /* 转换按钮的颜色 */
         }
 
-        /* 复制按钮的特定样式 */
+        /* 转换按钮的悬停效果 */
+        button#convert:hover {
+            background-color: #0056b3;  /* 悬停时背景颜色变深 */
+        }
+
+        /* 复制按钮的样式 */
         button#copy {
-            background-color: #28a745;
+            background-color: #28a745;  /* 复制按钮的颜色 */
         }
 
-        /* 复制按钮悬停样式 */
+        /* 复制按钮的悬停效果 */
         button#copy:hover {
-            background-color: #218838;
+            background-color: #218838;  /* 悬停时背景颜色变深 */
+        }
+
+        /* 清除按钮的样式 */
+        button#clear {
+            background-color: #dc3545;  /* 清除按钮的颜色 */
+        }
+
+        /* 清除按钮的悬停效果 */
+        button#clear:hover {
+            background-color: #c82333;  /* 悬停时背景颜色变深 */
         }
 
         /* 输出区的额外样式 */
@@ -108,12 +115,10 @@
                 font-size: 12px; /* 缩小字体大小 */
                 width: 100%; /* 保持全宽 */
                 height: 100px; /* 固定高度 */
-                min-height: 100px; /* 设置最小高度 */
             }
             button {
                 font-size: 16px; /* 保持按钮字体大小 */
                 width: 30%; /* 调整按钮宽度 */
-                max-width: none; /* 去掉最大宽度限制 */
             }
         }
     </style>
@@ -122,16 +127,18 @@
 
     <h1>jsDelivr CDN加速URL</h1>
 
-    <!-- 输入框：用户粘贴GitHub-Raw链接 -->
+    <!-- 用户粘贴GitHub-Raw链接的输入框 -->
     <textarea id="input" placeholder="GitHub-Raw URL"></textarea><br>
     <!-- 转换按钮 -->
     <button id="convert">转换</button>
 
     <div class="output">
-        <!-- 输出框：显示转换后的jsDelivr链接 -->
+        <!-- 输出框，显示转换后的jsDelivr链接 -->
         <textarea id="output" readonly placeholder="jsDelivr-CDN URL"></textarea><br>
         <!-- 复制按钮 -->
         <button id="copy">复制</button>
+        <!-- 清除按钮，用于清空输入框和输出框 -->
+        <button id="clear">清除</button>
     </div>
 
     <script>
@@ -142,7 +149,7 @@
          */
         function convertGitHubToJsDelivr(url) {
             // 匹配GitHub-Raw链接的正则表达式
-            const regex = /https:\/\/raw\.githubusercontent\.com\/([^\/]+)\/([^\/]+)\/([^\/]+)\/(.+)/;
+            const regex = /https:\/\/raw\.githubusercontent\.com\/([^/]+)\/([^/]+)\/([^/]+)\/(.+)/;
             const match = url.match(regex); // 执行正则匹配
 
             if (match) {
@@ -185,9 +192,21 @@
         // 为“复制”按钮绑定点击事件
         document.getElementById("copy").addEventListener("click", function() {
             const outputText = document.getElementById("output"); // 获取输出框
-            outputText.select(); // 选中内容
-            document.execCommand("copy"); // 执行复制操作
-            alert("已复制到剪贴板！"); // 提示复制成功
+            const text = outputText.value;
+
+            // 使用新的 Clipboard API 进行复制
+            navigator.clipboard.writeText(text).then(function() {
+                // 可以不再需要提示框，或者你可以选择添加提示用户复制成功
+            }).catch(function(err) {
+                console.error("复制失败", err); // 捕捉并显示错误
+            });
+        });
+
+        // 为“清除”按钮绑定点击事件
+        document.getElementById("clear").addEventListener("click", function() {
+            // 清空输入框和输出框的内容
+            document.getElementById("input").value = "";
+            document.getElementById("output").value = "";
         });
     </script>
 
